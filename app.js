@@ -1,5 +1,5 @@
 /**
- * Weasco 4.0 — Student Database Engine
+ * Weasco 4.0 Ana Javascript dosyasıdır, dikkatli kullanım gerektirir
  */
 const fs = require('fs');
 const path = require('path');
@@ -161,7 +161,7 @@ function showLeaderboard(){
 
 function switchPage(page){
     currentPage=page;
-    // Clean up any overlays/modals that might block UI
+    // Güncel sürümün beta versiyonunda arayüz kilitleniyordu ve takrar başlatılması gerekiyodu düzelttim.
     var ov=$('.sheetconv-overlay');if(ov)ov.remove();
     var fc2=$('#filterCard');if(fc2)fc2.classList.remove('active');
     var ss=$('#searchSection'),ls=$('#luckySection');
@@ -230,7 +230,7 @@ function injectSearchPlusUI(){
 }
 function removeSearchPlusUI(){var e=$('#searchPlusBlock');if(e)e.remove();selectedDegree='';selectedSort='default';minScoreFilter=0;}
 
-// DUEL
+// DUEL kodu
 function showDuelPlugin(){var c=$('#content');if(!c)return;c.innerHTML='<div class="duel-plugin"><h1 class="duel-title">DUEL</h1><div class="duel-modes"><button class="duel-mode-btn" data-mode="solo">SOLO</button><button class="duel-mode-btn" data-mode="team">TEAM</button></div><div class="duel-content" id="duelContent"><p class="duel-placeholder">Bir mod seçin</p></div></div>';$$('.duel-mode-btn').forEach(function(b){b.addEventListener('click',function(){$$('.duel-mode-btn').forEach(function(x){x.classList.remove('active');});this.classList.add('active');var dc=$('#duelContent');if(!dc)return;if(this.getAttribute('data-mode')==='solo')loadDuelSolo(dc);else loadDuelTeam(dc);});});}
 function getOpts(){return studentsData.map(function(s,i){return '<option value="'+i+'">'+esc(s.ad||'İsim Yok')+'</option>';}).join('');}
 function loadDuelSolo(ct){ct.innerHTML='<div class="duel-solo"><select class="duel-select" id="duelPlayer1"><option value="">Oyuncu 1</option>'+getOpts()+'</select><div class="duel-vs">VS</div><select class="duel-select" id="duelPlayer2"><option value="">Oyuncu 2</option>'+getOpts()+'</select><button class="duel-fight-btn" id="duelSoloBtn">KARŞILAŞTIR</button><div class="duel-result" id="duelSoloResult"></div></div>';$('#duelSoloBtn').addEventListener('click',startDuelSolo);}
@@ -240,10 +240,10 @@ function loadDuelTeam(ct){ct.innerHTML='<div class="duel-team"><div class="team-
 function setupTeams(){var ts=parseInt($('#teamSize').value||'2'),su=$('#teamSetup');if(!su)return;var o=getOpts(),t1='',t2='';for(var i=0;i<ts;i++){t1+='<select class="duel-select team1-player"><option value="">Oyuncu '+(i+1)+'</option>'+o+'</select>';t2+='<select class="duel-select team2-player"><option value="">Oyuncu '+(i+1)+'</option>'+o+'</select>';}su.innerHTML='<div class="team-grid"><div class="team-column"><h3>TAKIM 1</h3>'+t1+'</div><div class="duel-vs">VS</div><div class="team-column"><h3>TAKIM 2</h3>'+t2+'</div></div><button class="duel-fight-btn" id="startTeamBtn">KARŞILAŞTIR</button><div class="duel-result" id="duelTeamResult"></div>';$('#startTeamBtn').addEventListener('click',startDuelTeam);}
 function startDuelTeam(){var gp=function(sel){return Array.from($$(sel)).map(function(s){return s.value?studentsData[parseInt(s.value)]:null;}).filter(Boolean);};var t1=gp('.team1-player'),t2=gp('.team2-player');if(!t1.length||!t2.length)return;var sc1=t1.reduce(function(s,p){return s+calcScore(p).total;},0),sc2=t2.reduce(function(s,p){return s+calcScore(p).total;},0);var w=sc1>sc2?'TAKIM 1':(sc2>sc1?'TAKIM 2':'BERABERE');var r=$('#duelTeamResult');if(!r)return;r.innerHTML='<div class="duel-result-card"><h2>KAZANAN: '+w+'</h2><div class="duel-scores"><div class="duel-player-detail '+(sc1>sc2?'is-winner':'')+'"><h3>TAKIM 1</h3><p>'+t1.map(function(p){return esc(p.ad);}).join(', ')+'</p><p class="total">TOPLAM: '+sc1+'</p></div><div class="duel-player-detail '+(sc2>sc1?'is-winner':'')+'"><h3>TAKIM 2</h3><p>'+t2.map(function(p){return esc(p.ad);}).join(', ')+'</p><p class="total">TOPLAM: '+sc2+'</p></div></div></div>';}
 
-// CUSTOMCSS
+// CUSTOMCSS kodu
 function showCustomCSSPlugin(){var c=$('#content');if(!c)return;c.innerHTML='<div class="customcss-plugin"><h1 class="customcss-title">WeaCSS Editor</h1><textarea class="customcss-editor" id="customCSSEditor" placeholder="/* CSS */" spellcheck="false">'+esc(safeGet('customCSS',''))+'</textarea><div class="customcss-actions"><button class="customcss-btn apply" id="applyCSSBtn">Uygula</button><button class="customcss-btn reset" id="resetCSSBtn">Sıfırla</button></div></div>';$('#applyCSSBtn').addEventListener('click',function(){var css=$('#customCSSEditor').value;safeSet('customCSS',css);var st=$('#custom-css');if(!st){st=document.createElement('style');st.id='custom-css';document.head.appendChild(st);}st.textContent=css;});$('#resetCSSBtn').addEventListener('click',function(){safeSet('customCSS','');var e=$('#customCSSEditor');if(e)e.value='';var st=$('#custom-css');if(st)st.remove();});}
 
-// PALETTE
+// PALETTE kodu
 function showPalettePlugin(){var c=$('#content');if(!c)return;var sp=safeGet('primaryColor','#9D7FFF'),ss=safeGet('secondaryColor','#FFFFFF');c.innerHTML='<div class="palette-plugin"><h1 class="palette-title">Palette</h1><div class="palette-controls"><div class="color-picker-group"><label>Birincil</label><input type="color" id="primaryColor" value="'+sp+'" class="color-picker"><span class="color-value" id="primaryValue">'+sp+'</span></div><div class="color-picker-group"><label>İkincil</label><input type="color" id="secondaryColor" value="'+ss+'" class="color-picker"><span class="color-value" id="secondaryValue">'+ss+'</span></div></div><div class="palette-actions"><button class="palette-btn apply" id="applyPaletteBtn">Uygula</button><button class="palette-btn reset" id="resetPaletteBtn">Sıfırla</button></div><div class="palette-preview"><h3>Önizleme</h3><button class="preview-button" id="previewBtn">Örnek</button><div class="preview-card-sample" id="previewCardSample">Kart</div></div></div>';var pi=$('#primaryColor'),si=$('#secondaryColor');var up=function(){$('#primaryValue').textContent=pi.value;$('#secondaryValue').textContent=si.value;var b=$('#previewBtn');if(b)b.style.background=pi.value;var cd=$('#previewCardSample');if(cd)cd.style.borderColor=pi.value;};pi.addEventListener('input',up);si.addEventListener('input',up);$('#applyPaletteBtn').addEventListener('click',function(){safeSet('primaryColor',pi.value);safeSet('secondaryColor',si.value);document.documentElement.style.setProperty('--primary-color',pi.value);document.documentElement.style.setProperty('--secondary-color',si.value);});$('#resetPaletteBtn').addEventListener('click',function(){safeSet('primaryColor','#9D7FFF');safeSet('secondaryColor','#FFFFFF');document.documentElement.style.setProperty('--primary-color','#9D7FFF');document.documentElement.style.setProperty('--secondary-color','#FFFFFF');showPalettePlugin();});}
 function loadSavedPalette(){var p=safeGet('primaryColor',null),s=safeGet('secondaryColor',null);if(p)document.documentElement.style.setProperty('--primary-color',p);if(s)document.documentElement.style.setProperty('--secondary-color',s);}
 
@@ -251,7 +251,7 @@ function loadSavedPalette(){var p=safeGet('primaryColor',null),s=safeGet('second
 function initSH(){studentHistory=safeParse(safeGet('studentHistory','{}'),{});var sorted=studentsData.slice().sort(function(a,b){return(b.puan||0)-(a.puan||0);});sorted.forEach(function(s,i){if(!studentHistory[s.okul_no])studentHistory[s.okul_no]={puan:s.puan,basari_derecesi:s.basari_derecesi,lastRank:i+1};});safeSet('studentHistory',JSON.stringify(studentHistory));}
 function detectChanges(s){if(!seeChangesActive)return null;var h=studentHistory[s.okul_no];if(!h)return null;return{puan:s.puan!==h.puan?{old:h.puan,new:s.puan}:null};}
 
-// SHEETCONV
+// SHEETCONV kodu
 function addExportBtn(sel,type){var c=$(sel);if(!c||!sheetConvActive||c.querySelector('.sheetconv-btn'))return;var b=document.createElement('button');b.className='sheetconv-btn';b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export';b.addEventListener('click',function(e){e.stopPropagation();showExportMenu(type);});c.style.position='relative';c.appendChild(b);}
 function showExportMenu(type){var e=$('.sheetconv-overlay');if(e)e.remove();var ov=document.createElement('div');ov.className='sheetconv-overlay';var m=document.createElement('div');m.className='sheetconv-menu';m.innerHTML='<h4>Dışa Aktar</h4><button data-format="json">JSON</button><button data-format="csv">CSV</button><button data-format="pdf">PDF</button><button data-format="excel">Excel</button>';ov.appendChild(m);document.body.appendChild(ov);ov.addEventListener('click',function(ev){if(ev.target===ov)ov.remove();});m.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){doExport(type,b.getAttribute('data-format'));ov.remove();});});}
 function doExport(dataType,format){
@@ -265,10 +265,8 @@ function doExport(dataType,format){
 }
 function dlBlob(content,mime,name){try{var b=new Blob([content],{type:mime}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}catch(e){}}
 
-// ═══════════════════════════════════════════════
-// SETUP WIZARD
-// ═══════════════════════════════════════════════
 
+// SETUP WIZARD
 var setupMusic = null;
 var setupMusicOn = true;
 
@@ -377,7 +375,7 @@ function showSetupWizard() {
     // Spawn particles
     spawnParticles();
 
-    // Music toggle
+    // Music AÇ/KAPA
     var mbtn = $('#wizardMusicBtn');
     if (mbtn) mbtn.addEventListener('click', toggleSetupMusic);
 
@@ -389,7 +387,7 @@ function showSetupWizard() {
         goToWizardStep(nextStep);
     });
 
-    // Theme picker
+    // Theme seçicis
     wizard.addEventListener('click', function(e) {
         var opt = e.target.closest('.wizard-theme-opt');
         if (!opt) return;
@@ -400,7 +398,7 @@ function showSetupWizard() {
         toggleTheme();
     });
 
-    // Finish
+    // son cilalamalar
     var finBtn = $('#wizardFinishBtn');
     if (finBtn) finBtn.addEventListener('click', finishSetup);
 }
@@ -410,11 +408,11 @@ function goToWizardStep(step) {
     var target = $('.wizard-step[data-step="'+step+'"]');
     if (target) target.classList.add('active');
 
-    // Update progress bar
+    // bar'ı updatele
     var bar = $('#wizardProgressBar');
     if (bar) bar.style.width = (step / 4 * 100) + '%';
 
-    // Animate stats when reaching step 3
+    // 3. adımda stats animate et
     if (step === 3) {
         var total = studentsData.length;
         var classes = new Set(studentsData.map(function(s){return s.sinif;}).filter(Boolean)).size;
@@ -454,7 +452,7 @@ function spawnParticles() {
 }
 
 function finishSetup() {
-    // Save selected plugins
+    // eklenti kaydı
     var checks = $$('.wizard-plugin-cb:checked');
     checks.forEach(function(cb) {
         var id = cb.value;
@@ -488,9 +486,7 @@ function finishSetup() {
     }
 }
 
-// ═══════════════════════════════════════════════
-// MAIN INIT
-// ═══════════════════════════════════════════════
+// ana başlatma
 
 function initApp() {
     if (searchPlusActive) injectSearchPlusUI();
