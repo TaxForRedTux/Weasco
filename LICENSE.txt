@@ -1,7 +1,6 @@
 WEASCO - Credits
 
-masteryiaynıben (developer),
-Yasyros (developer, writer),
-Evil Morty (writer)
+RedTux (developer, writer),
+Vxpops (writer, bug finder)
 
-Copyright (c) 2025 WEASCO
+Copyright (c) 2026 WEASCO
