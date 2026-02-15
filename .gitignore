@@ -1,0 +1,8 @@
+node_modules/
+dist/
+out/
+build/
+*.exe
+*.zip
+*.rar
+*.7z

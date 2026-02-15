@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <g stroke="#111111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Gövde -->
+    <path d="
+      M60 96
+      H196
+      L182 208
+      H74
+      Z" />
+
+
+    <!-- Tek sap -->
+    <path d="
+      M96 96
+      C96 52, 160 52, 160 96" />
+
+  </g>
+
+</svg>
