@@ -1,3 +1,3 @@
-Dikkat! bu kodlar sadece temelidir, ayrıca lütfen bir alternatif yapacak olursanız Electron+Electron-builder yüklemeyi unutmayınız, iyi günler!
+Alternatif ya da geliştirilmiş versiyon yaparken Package.json'u yükleyin ve lütfen students.json'u kullanmayın, bizim okulumuza özgüdür. 
 
-note by audace.
+Note by Hayek.xyz
