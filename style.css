@@ -1,8 +1,4 @@
-/* ═══════════════════════════════════════════════
-   WEASCO 4.0 — STYLE ENGINE
-   Professional rewrite with CSS variables, 
-   proper theming, and fixed plugin layouts
-   ═══════════════════════════════════════════════ */
+/* stil dosyası */
 
 /* ─── FONT FACES ─── */
 @font-face { font-family: 'Geist'; src: url('assets/Geist-Regular.ttf') format('truetype'); font-weight: 400; }
