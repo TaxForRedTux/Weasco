@@ -44,7 +44,7 @@ function createWindow() {
     });
 }
 
-// IPC handler for opening external URLs safely
+
 ipcMain.on('open-external', (event, url) => {
     if (typeof url === 'string' && (url.startsWith('https://') || url.startsWith('http://'))) {
         shell.openExternal(url);
